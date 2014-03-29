@@ -1,15 +1,22 @@
-### Services
+# nginx-php5
 
-- Ubuntu 13.10 (saucy)
-- Nginx (realip)
-- PHP5 (cli, curl, fpm, json, mcrypt, sqlite, mysqlnd)
+Dockerfile which providers services for [Nginx][nginx] and [PHP5][php].
 
-### Volumes
+[nginx]: http://nginx.org/en/docs/
+[php]: http://php.net/
 
-Web root is located at `/var/www/public`
+## Building this Image
 
-Logs are available at `/var/log/nginx`
+```
+$ sudo docker build -t="nian/nginx-php5"
+```
 
-### Ports
+## Running this Image
 
-HTTP port 80
+Document root is configured to host at `/var/www/public`. Log files are available at `/var/log/nginx`.
+
+```
+$ mkdir -p /tmp/www/public
+$ mkdir -p /tmp/nginx
+$ sudo docker run -d -p 80:80 -v /tmp/www:/var/www -v /tmp/nginx:/var/log/nginx
+```
