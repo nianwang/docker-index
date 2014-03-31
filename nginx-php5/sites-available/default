@@ -1,10 +1,10 @@
 server {
   listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
+  #listen [::]:80 default_server ipv6only=on;
 
-  server_name _;
   root /var/www/public;
   index index.html index.php;
+  server_name _;
 
   location = /stub_status {
     stub_status on;

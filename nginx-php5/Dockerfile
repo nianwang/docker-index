@@ -9,21 +9,24 @@ RUN locale-gen en_US.UTF-8
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 
-# Install packages
+# Basic packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get install -y \
-    git curl nginx \
-    php5-cli php5-curl php5-fpm php5-json php5-mcrypt php5-sqlite php5-mysqlnd
+RUN apt-get install -y nginx php5-fpm
 
 # Nginx configuration
-RUN unlink /etc/nginx/sites-enabled/default
-ADD ./realip.conf /etc/nginx/conf.d/realip.conf
-ADD ./www.conf /etc/nginx/sites-enabled/www.conf
+ADD ./conf.d/ /etc/nginx/conf.d/
+ADD ./sites-available /etc/nginx/sites-available/
 
-# Decouple our data from our container
+# Decouple data from container
 VOLUME ["/var/www", "/var/log/nginx"]
 
+# Startup script
 EXPOSE 80
 ADD ./startup.sh /opt/startup.sh
 RUN chmod +x /opt/startup.sh
+
+# Additional configuration examples
+#VOLUME ["/etc/nginx/sites-available"]
+#RUN apt-get install -y git curl php5-cli php5-curl php5-json php5-mcrypt php5-mysqlnd
+
 CMD ["/opt/startup.sh"]
