@@ -25,8 +25,4 @@ EXPOSE 80
 ADD ./startup.sh /opt/startup.sh
 RUN chmod +x /opt/startup.sh
 
-# Additional configuration examples
-#VOLUME ["/etc/nginx/sites-available"]
-#RUN apt-get install -y git curl php5-cli php5-curl php5-json php5-mcrypt php5-mysqlnd
-
 CMD ["/opt/startup.sh"]

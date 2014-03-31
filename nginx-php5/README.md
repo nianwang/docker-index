@@ -22,3 +22,10 @@ $ mkdir -p /opt/www/public
 $ mkdir -p /opt/nginx
 $ sudo docker run -d -p 80 -v /opt/www:/var/www -v /opt/nginx:/var/log/nginx nian/nginx-php5
 ```
+
+## Building from this Image
+
+```
+FROM nian/nginx-php5
+RUN apt-get install -y git curl php5-curl php5-json php5-mcrypt
+```
