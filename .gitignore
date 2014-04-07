@@ -1,2 +1,6 @@
 # Vagrant
 /.vagrant
+
+# Packer
+/packer/packer_cache
+/packer/*.box

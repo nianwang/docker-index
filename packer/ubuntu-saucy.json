@@ -1,0 +1,55 @@
+{
+    "builders": 
+    [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "Ubuntu_64",
+            "iso_url": "http://releases.ubuntu.com/13.10/ubuntu-13.10-server-amd64.iso",
+            "iso_checksum": "4d1a8b720cdd14b76ed9410c63a00d0e",
+            "iso_checksum_type":"md5",
+            "http_directory": "preseed",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "boot_wait":"5s",
+            "output_directory": "ubuntu64_basebox_virtualbox",
+            "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
+            "boot_command": [
+                "<esc><esc><enter><wait>",
+                "/install/vmlinuz noapic ",
+                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+                "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+                "hostname={{ .Name }} ",
+                "fb=false debconf/frontend=noninteractive ",
+                "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+                "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+                "initrd=/install/initrd.gz -- ",
+                "<enter>"
+            ]
+        }
+    ],
+    "provisioners": 
+    [
+        {
+            "type": "shell",
+            "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
+            "inline": [
+                "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9",
+                "echo 'deb http://get.docker.io/ubuntu docker main' > /etc/apt/sources.list.d/docker.list",
+                "apt-get update -y",
+                "apt-get install -y linux-headers-$(uname -r) build-essential dkms",
+                "apt-get install -y cgroup-lite lxc-docker",
+                "apt-get clean",
+                "mount -o loop VBoxGuestAdditions.iso /media/cdrom",
+                "sh /media/cdrom/VBoxLinuxAdditions.run",
+                "umount /media/cdrom",
+                "mkdir ~/.ssh",
+                "wget -qO- https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub >> ~/.ssh/authorized_keys",
+                "echo 'vagrant ALL=NOPASSWD:ALL' > /tmp/vagrant",
+                "chmod 0440 /tmp/vagrant",
+                "mv /tmp/vagrant /etc/sudoers.d/"
+            ]
+        }
+    ],
+    "post-processors": ["vagrant"]
+}
+
