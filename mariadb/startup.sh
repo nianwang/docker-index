@@ -20,9 +20,9 @@ initialize_scripts() {
 
     if [ "$SCRIPTS" ]
     then
-        echo "Running scripts ... ($SCRIPTS)"
-        cat "$SCRIPTS" | mysql -u root
-        rm -f "$SCRIPTS"
+        echo "Running scripts ..."
+        cat $SCRIPTS | mysql -u root
+        rm -f $SCRIPTS
     fi
 } 
 
