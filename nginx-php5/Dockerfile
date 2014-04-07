@@ -13,7 +13,7 @@ ENV LC_ALL     en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get install -y nginx php5-fpm
 
-# Nginx configuration
+# Configuration
 ADD ./conf.d/ /etc/nginx/conf.d/
 ADD ./sites-available /etc/nginx/sites-available/
 
