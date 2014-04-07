@@ -32,9 +32,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provision via Docker
   config.vm.provision "docker" do |d|
     d.build_image "/vagrant/mariadb", args: "-t mariadb"
-    d.build_image "/vagrant/nginx-php5", args: "-t nginx-php5"
-
     d.run "mariadb", args: "-p 3306:3306 -v /opt/mysql:/var/lib/mysql"
-    d.run "nginx-php5", args: "-p 80:80 -v /opt/www:/var/www -v /opt/logs:/var/log/nginx"
+
+    d.build_image "/vagrant/nginx-php5", args: "-t nginx-php5"
+    d.run "nginx-php5", args: "-p 80:80 -v /opt/www:/var/www -v /opt/logs:/var/log/nginx --link mariadb:db"
   end
 end
