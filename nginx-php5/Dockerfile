@@ -15,7 +15,8 @@ RUN apt-get install -y nginx php5-fpm
 
 # Configuration
 ADD ./conf.d/ /etc/nginx/conf.d/
-ADD ./sites-available /etc/nginx/sites-available/
+ADD ./sites-available/ /etc/nginx/sites-available/
+ADD ./pool.d/ /etc/php5/fpm/pool.d/
 
 # Decouple data from container
 VOLUME ["/var/www", "/var/log/nginx"]

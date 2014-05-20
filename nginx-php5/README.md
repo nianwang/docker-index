@@ -13,14 +13,14 @@ $ sudo docker build -t="nian/nginx-php5"
 
 ## Running this Image
 
-Document root is configured to host at `/var/www/public`. Log files are available at `/var/log/nginx`.
+Document root is configured to host at `/var/www/public`.
 
 In the example below, we use `/opt/` as a base, but feel free to modify for your configuration as needed.
 
 ```
 $ mkdir -p /opt/www/public
 $ mkdir -p /opt/nginx
-$ sudo docker run -d -p 80 -v /opt/www:/var/www -v /opt/nginx:/var/log/nginx nian/nginx-php5
+$ sudo docker run -d -p 80 -v /opt/www:/var/www nian/nginx-php5
 ```
 
 ## Building from this Image
