@@ -1,10 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -35,6 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.run "mariadb", args: "-p 3306:3306 -v /opt/mysql:/var/lib/mysql"
 
     d.build_image "/vagrant/nginx-php5", args: "-t nginx-php5"
-    d.run "nginx-php5", args: "-p 80:80 -v /opt/www:/var/www -v /opt/logs:/var/log/nginx --link mariadb:db"
+    d.run "nginx-php5", args: "-p 80:80 -v /opt/www:/var/www"
   end
 end
